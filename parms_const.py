@@ -1,0 +1,3 @@
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
+BACKGOUD_COLOR = (230, 220, 255)  # светлый лавандовый
