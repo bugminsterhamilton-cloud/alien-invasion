@@ -4,6 +4,6 @@ class Settings:
     def __init__(self):
         self.screen_width = SCREEN_WIDTH
         self.screen_height = SCREEN_HEIGHT
-        # self.bg_color = BACKGOUD_COLOR
+        # self.bg_color = BACKGOUD_COLOR  # добавил картинку космоса
         self.bg_image_path = 'images/background.bmp'
         self.ship_speed = 0.5
