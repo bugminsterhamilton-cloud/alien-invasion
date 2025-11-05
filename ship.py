@@ -14,6 +14,16 @@ class Ship():
         # каждый новый корабль появляется у нижнего края экрана
         self.rect.midbottom = self.screen_rect.midbottom  # выравнивание объекта по центру
 
+        self.moving_right = False  # флаг перемещения (клавиша нажата -> True, клавишу отпустили -> False)
+        self.moving_left = False
+
+    def update(self):
+        """Обновляет позицию корабля с учетом флага"""
+        if self.moving_right:
+            self.rect.x += 1  # шаг движения вправо (логика перемещения)
+        elif self.moving_left:
+            self.rect.x -= 1  # шаг движения влево (логика перемещения)
+
     def blitme(self):
         """рисует корабль в текущей позиции"""
         self.screen.blit(self.image, self.rect)

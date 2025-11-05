@@ -23,15 +23,33 @@ class AlienInvasion():
         """запуск основного цикла игры"""
         while True:
             # отслеживание событий клавиатуры и мышки
-            self._check_events()
-            self._update_screen()
+            self._check_events()  # Обновляет флаги
+            self.ship.update()  # Двигает корабль по флагам
+            self._update_screen()  # Отрисовывает новую позицию
 
-    # Рефакторинг: 2 249 стр.
+    # Рефакторинг: 2 (249 стр.)
     def _check_events(self):
         """Обрабатывает нажатия клавиш и события мыши"""
         for event in pygame.event.get():  # для получения доступа к событиям
             if event.type == pygame.QUIT:
                 sys.exit()
+            # уезжает за пределы экрана и не останавливается
+            elif event.type == pygame.KEYDOWN:  # начал отсюда 5.11.25 (движение работает)
+                        # right:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = True  # ВКЛЮЧАЕТ движение
+                        # left:
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = True
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False  # ВЫКЛЮЧАЕТ движение
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = False
+
+
+
+
 
     # Рефакторинг: 3
     def _update_screen(self):
