@@ -1,7 +1,9 @@
 import pygame
 import sys
 from ship import Ship
+from bullet import Bullet
 from settings import Settings
+
 
 
 class AlienInvasion():
@@ -22,6 +24,7 @@ class AlienInvasion():
 
         self.bg_image = pygame.image.load(self.settings.bg_image_path)
         self.bg_image = pygame.transform.scale(self.bg_image,(self.settings.screen_width,self.settings.screen_height))
+        self.bullets = pygame.sprite.Group()
 
     def run_game(self):
         """запуск основного цикла игры"""
@@ -29,7 +32,18 @@ class AlienInvasion():
             # отслеживание событий клавиатуры и мышки
             self._check_events()  # Обновляет флаги
             self.ship.update()  # Двигает корабль по флагам
+            self._update_bullets()
+            # self.bullets.update()  # обновение позиции снаряда
             self._update_screen()  # Отрисовывает новую позицию
+
+    def _update_bullets(self):
+        """обновляет позиции снарядов и уничтожает старые снаряды"""
+        self.bullets.update()
+        # удаление снарядов, вышедших за края экрана
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:  # если снаряд вышел за верхнюю границу, он удаляется из bullet (стр. 41)
+                self.bullets.remove(bullet)
+            # print(len(self.bullets))  # вывод в терминал количества снярядов
 
     # Рефакторинг: 2 (249 стр.)
     def _check_events(self):
@@ -51,39 +65,38 @@ class AlienInvasion():
         # left:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
-        elif event.key == pygame.K_ESCAPE:  # добавил кнопки выхода из игры
-            sys.exit()
         elif event.key == pygame.K_UP:
             self.ship.moving_up = True
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = True
+        elif event.key == pygame.K_ESCAPE:  # добавил кнопки выхода из игры
+            sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         """реагирует на отпускание клавиш"""
         if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = False  # ВЫКЛЮЧАЕТ движение
-
+            self.ship.moving_right = False  # выключает движение
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
-
         elif event.key == pygame.K_UP:
             self.ship.moving_up = False
-
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = False
 
+    def _fire_bullet(self):
+        """создание нового снаряда и включение его в группу bullets"""
+        if len(self.bullets) < self.settings.bullets_allowed:  # ограничение количества снарядов
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
-
-
-
-
-
-
-    # Рефакторинг: 3
     def _update_screen(self):
         """Отображает изображение на экране и новый экран"""
         self.screen.blit(self.bg_image, (0, 0))  # прорисовывается экран
         self.ship.blitme()
+        for bullets in self.bullets.sprites():
+            bullets.draw_bullet()
         # отображение последнего прорисованного экрана
         pygame.display.flip()
 
