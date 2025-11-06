@@ -1,4 +1,6 @@
 from parms_const import *
+from settings import *
+
 class Settings:
     # класс для хранениея всех настроект игры
     def __init__(self):
@@ -6,10 +8,10 @@ class Settings:
         self.screen_height = SCREEN_HEIGHT
         # self.bg_color = BACKGOUD_COLOR  # добавил картинку космоса
         self.bg_image_path = 'images/background.bmp'
-        self.ship_speed = 0.5
+        self.ship_speed = SHIP_SPEED
         # создание снарядов
-        self.bullet_speed = 1
-        self.bullet_width = 3
-        self.bullet_height = 15
-        self.bullet_color = (135, 206, 235)  # подумай, что бы торпеды летали
-        self.bullets_allowed = 3  # ограничение количества снарядов
+        self.bullet_speed = BULLET_SPEED
+        self.bullet_width = BULLET_WIDTH
+        self.bullet_height = BULLET_HEIGHT
+        self.bullet_color = BULLET_COLOR  # подумай, что бы торпеды летали
+        self.bullets_allowed = BULLET_ALLOWED  # ограничение количества снарядов

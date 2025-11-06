@@ -2,6 +2,7 @@ import pygame
 import sys
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 from settings import Settings
 
 
@@ -25,6 +26,9 @@ class AlienInvasion():
         self.bg_image = pygame.image.load(self.settings.bg_image_path)
         self.bg_image = pygame.transform.scale(self.bg_image,(self.settings.screen_width,self.settings.screen_height))
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
 
     def run_game(self):
         """запуск основного цикла игры"""
@@ -91,12 +95,23 @@ class AlienInvasion():
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
+    def _create_fleet(self):
+        """создание флота вторжения"""
+        # создание пришельца
+        alien = Alien(self)
+        self.aliens.add(alien)
+
+
+
+
+
     def _update_screen(self):
         """Отображает изображение на экране и новый экран"""
         self.screen.blit(self.bg_image, (0, 0))  # прорисовывается экран
         self.ship.blitme()
         for bullets in self.bullets.sprites():
             bullets.draw_bullet()
+        self.aliens.draw(self.screen)
         # отображение последнего прорисованного экрана
         pygame.display.flip()
 
