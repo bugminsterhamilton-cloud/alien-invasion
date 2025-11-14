@@ -15,3 +15,6 @@ class Settings:
         self.bullet_height = BULLET_HEIGHT
         self.bullet_color = BULLET_COLOR  # подумай, что бы торпеды летали
         self.bullets_allowed = BULLET_ALLOWED  # ограничение количества снарядов
+        self.alien_speed = 1.0  # настройка пришельцев началась тут (используется в реализации update())
+        self.fleet_drop_speed = 10
+        self.fleet_direction = 1  # 1 - движение вправо, а -1 - влево
