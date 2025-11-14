@@ -53,7 +53,8 @@ class AlienInvasion():
     def _update_aliens(self):
         """Обновляет позиции всех пришельцев"""
         self._check_fleet_edges()
-        self.aliens.update()  # если запустить сейчас, флот выйдет за экран
+        self.aliens.update()
+        self._check_fleet_bottom()  # проверка ушли за нижний экран
 
 
     # Рефакторинг: 2 (249 стр.)
@@ -147,6 +148,22 @@ class AlienInvasion():
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
+    def _check_fleet_bottom(self):
+        """Проверяет, достигли ли пришельцы нижнего края экрана"""
+        screen_rect = self.screen.get_rect()
+        all_aliens_gone = True
+        for alien in self.aliens.sprites():
+            if alien.rect.top < screen_rect.bottom:
+                all_aliens_gone = False
+                break
+        if all_aliens_gone:  # Если все пришельцы ушли за нижний край
+            self._reset_fleet_to_top()
+
+    def _reset_fleet_to_top(self):
+        """Перемещает весь флот пришельцев наверх с новой позицией"""
+        self.aliens.empty()  # Удаляем старых пришельцев
+        self._create_fleet()  # Создаем новый флот сверху
+        self.settings.alien_speed *= 1.7  # Увеличиваем скорость на 10%
 
     def _update_screen(self):
         """Отображает изображение на экране и новый экран"""
