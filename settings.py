@@ -9,6 +9,7 @@ class Settings:
         # self.bg_color = BACKGOUD_COLOR  # добавил картинку космоса
         self.bg_image_path = 'images/background.bmp'
         self.ship_speed = SHIP_SPEED
+        self.ship_limit = SHIP_LIMIT
         # создание снарядов
         self.bullet_speed = BULLET_SPEED
         self.bullet_width = BULLET_WIDTH

@@ -12,7 +12,6 @@ class Ship():
         self.rect = self.image.get_rect()  # метод вызывается для позиционирования объекта. Доступны оси x/y
         # каждый новый корабль появляется у нижнего края экрана
         self.rect.midbottom = self.screen_rect.midbottom  # выравнивание объекта по центру
-
         self.x = float(self.rect.x)  # сохранение вещественной координаты центра кораблчя. што блядь???
         self.y = float(self.rect.y)  # см. коммент стр. 16
         self.moving_right = False  # флаг перемещения (клавиша нажата -> True, клавишу отпустили -> False)
@@ -40,3 +39,8 @@ class Ship():
     def blitme(self):
         """рисует корабль в текущей позиции"""
         self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """размещает корабль в центре"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
